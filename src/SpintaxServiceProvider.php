@@ -3,7 +3,6 @@
 namespace MadeITBelgium\Spintax;
 
 use Illuminate\Support\ServiceProvider;
-use MadeITBelgium\Spintax\Spintax;
 
 /**
  * @version    1.0.0
