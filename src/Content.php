@@ -5,7 +5,6 @@ namespace MadeITBelgium\Spintax;
 use Countable;
 
 /**
- *
  * @version    1.0.0
  *
  * @copyright  Copyright (c) 2019 Made I.T. (http://www.madeit.be)
@@ -15,34 +14,37 @@ use Countable;
 class Content implements Countable
 {
     protected $content;
-    
+
     protected $children = [];
-    
+
     protected $next;
-    
+
     public function __construct($content = '')
     {
         $this->setContent($content);
     }
-    
+
     public function setContent($content)
     {
         $this->content = $content;
+
         return $this;
     }
-    
-    public function addChild(Content $child)
+
+    public function addChild(self $child)
     {
         $this->children[] = $child;
+
         return $this;
     }
-    
-    public function setNext(Content $next)
+
+    public function setNext(self $next)
     {
         $this->next = $next;
+
         return $this;
     }
-    
+
     public function generate(array &$path = [], &$index = 0)
     {
         $content = $this->content;
@@ -53,16 +55,17 @@ class Content implements Countable
                 $path[$index] = \rand(0, count($this->children) - 1);
             }
             $option = $path[$index];
-            ++$index;
+            $index++;
             $content .= $this->children[$option]->generate($path, $index);
         }
         // continue further
         if (isset($this->next)) {
             $content .= $this->next->generate($path, $index);
         }
+
         return $content;
     }
-    
+
     public function dump()
     {
         $content = $this->content;
@@ -72,15 +75,16 @@ class Content implements Countable
             foreach ($this->children as $child) {
                 $options[] = $child->dump();
             }
-            $content .= '{' . implode('|', $options) . '}';
+            $content .= '{'.implode('|', $options).'}';
         }
         // continue further
         if (isset($this->next)) {
             $content .= $this->next->dump();
         }
+
         return $content;
     }
-    
+
     public function getPaths()
     {
         if (empty($this->children)) {
@@ -104,10 +108,11 @@ class Content implements Countable
                     }
                 }
             }
+
             return $paths;
         }
     }
-    
+
     public function count()
     {
         // self-caontained at least
@@ -117,57 +122,60 @@ class Content implements Countable
             foreach ($this->children as $child) {
                 $count += \count($child);
             }
-            --$count;
+            $count--;
         }
         // also use further content
         if (isset($this->next)) {
             $count *= \count($this->next);
         }
+
         return $count;
     }
-    
-    public function getAll() {
+
+    public function getAll()
+    {
         $path = [];
         $result = [];
-        
-        foreach($this->generateArray() as $content) {
+
+        foreach ($this->generateArray() as $content) {
             $result[] = $content;
         }
-        
+
         return $result;
     }
-    
-    private function generateArray() {
+
+    private function generateArray()
+    {
         $content = $this->content;
         $results = [];
-        
+
         // pick child value
         if (!empty($this->children)) {
-            foreach($this->children as $child) {
+            foreach ($this->children as $child) {
                 $childContents = $child->generateArray();
-                foreach($childContents as $childContent) {
-                    $results[] = $content . $childContent;
+                foreach ($childContents as $childContent) {
+                    $results[] = $content.$childContent;
                 }
             }
-        }
-        else {
+        } else {
             $results[] = $content;
         }
-        
+
         // continue further
         if (isset($this->next)) {
             $endResult = [];
             $contents = $this->next->generateArray();
-            for($i = 0; $i < count($results); $i++) {
-                for($j = 0; $j < count($contents); $j++) {
-                    $endResult[] = $results[$i] . $contents[$j];
+            for ($i = 0; $i < count($results); $i++) {
+                for ($j = 0; $j < count($contents); $j++) {
+                    $endResult[] = $results[$i].$contents[$j];
                 }
             }
             $results = $endResult;
         }
+
         return $results;
     }
-    
+
     public function __toString()
     {
         return $this->dump();

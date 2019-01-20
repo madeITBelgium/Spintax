@@ -3,7 +3,6 @@
 namespace MadeITBelgium\Spintax;
 
 /**
- *
  * @version    1.0.0
  *
  * @copyright  Copyright (c) 2019 Made I.T. (http://www.madeit.be)
@@ -50,9 +49,10 @@ class Spintax
             $part = strpbrk($string, $tokens);
         }
         $current->setContent($string);
+
         return $root;
     }
-    
+
     public static function replicate($content, $path)
     {
         // parse content
@@ -63,6 +63,7 @@ class Spintax
         if (!is_array($path)) {
             $path = explode(',', $path);
         }
+
         return $content->generate($path);
     }
 }

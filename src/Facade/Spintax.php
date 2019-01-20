@@ -5,7 +5,6 @@ namespace MadeITBelgium\Spintax\Facade;
 use Illuminate\Support\Facades\Facade;
 
 /**
- *
  * @version    1.0.0
  *
  * @copyright  Copyright (c) 2019 Made I.T. (http://www.madeit.be)

@@ -6,7 +6,6 @@ use Illuminate\Support\ServiceProvider;
 use MadeITBelgium\Spintax\Spintax;
 
 /**
- *
  * @version    1.0.0
  *
  * @copyright  Copyright (c) 2019 Made I.T. (http://www.madeit.be)
@@ -22,7 +21,6 @@ class Spintax extends ServiceProvider
      */
     public function boot()
     {
-        
     }
 
     /**
@@ -32,7 +30,7 @@ class Spintax extends ServiceProvider
      */
     public function register()
     {
-        $this->app->singleton('spintax', Spintax::class);
+        $this->app->singleton('spintax', self::class);
     }
 
     /**
