@@ -29,7 +29,7 @@ class SpintaxServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->singleton('spintax', self::class);
+        $this->app->bind('spintax', 'MadeITBelgium\Spintax\Spintax');
     }
 
     /**
